@@ -1,0 +1,11 @@
+
+description = 'Android-PullToRefresh Extras: ViewPager'
+dependencies {
+    compile group: 'com.google.android', name: 'support-v4', version:'r7'
+  compile project(':library')
+    compile(group: 'com.google.android', name: 'android', version:'4.1.1.4') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+}
