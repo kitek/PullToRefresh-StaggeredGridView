@@ -1,0 +1,12 @@
+rootProject.name = 'parent'
+include ':library'
+include ':sample'
+include ':extras:extra-listfragment'
+include ':extras:extra-viewpager'
+include ':extras'
+
+project(':library').projectDir = "$rootDir/library" as File
+project(':sample').projectDir = "$rootDir/sample" as File
+project(':extras:extra-listfragment').projectDir = "$rootDir/extras/PullToRefreshListFragment" as File
+project(':extras:extra-viewpager').projectDir = "$rootDir/extras/PullToRefreshViewPager" as File
+project(':extras').projectDir = "$rootDir/extras" as File
