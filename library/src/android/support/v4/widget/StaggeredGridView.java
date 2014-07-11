@@ -816,14 +816,16 @@ public class StaggeredGridView extends ViewGroup {
 
                 final int colEnd = lp.column + Math.min(mColCount, lp.span);
                 for (int col = lp.column; col < colEnd; col++) {
-                    final int colTop = top - rec.getMarginAbove(col - lp.column);
-                    final int colBottom = bottom + rec.getMarginBelow(col - lp.column);
-                    if (colTop < mItemTops[col]) {
-                        mItemTops[col] = colTop;
-                    }
-                    if (colBottom > mItemBottoms[col]) {
-                        mItemBottoms[col] = colBottom;
-                    }
+                	if (null != rec) {
+	                    final int colTop = top - rec.getMarginAbove(col - lp.column);
+	                    final int colBottom = bottom + rec.getMarginBelow(col - lp.column);
+	                    if (colTop < mItemTops[col]) {
+	                        mItemTops[col] = colTop;
+	                    }
+	                    if (colBottom > mItemBottoms[col]) {
+	                        mItemBottoms[col] = colBottom;
+	                    }
+                	}
                 }
             }
 
