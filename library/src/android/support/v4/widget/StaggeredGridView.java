@@ -67,6 +67,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.AbsListView;
 import android.widget.ListAdapter;
 
 /**
@@ -246,6 +247,14 @@ public class StaggeredGridView extends ViewGroup {
      * Rectangle used for hit testing children
      */
     private Rect mTouchFrame;
+	
+	private AbsListView.OnScrollListener mOnScrollListener;
+
+	private View emptyView;
+
+    public void setOnScrollListener (AbsListView.OnScrollListener l) {
+        mOnScrollListener = l;
+    }
 
     private static final class LayoutRecord {
         public int column;
@@ -394,6 +403,14 @@ public class StaggeredGridView extends ViewGroup {
         if (needsPopulate) {
             populate(false);
         }
+    }
+	
+	/**
+     * Set the View to be shown when items number indicate 0
+     * @param v View
+     */
+    public void setEmptyView(View v) {
+    	emptyView = v;
     }
 
     /**
@@ -700,6 +717,10 @@ public class StaggeredGridView extends ViewGroup {
             }
         } else {
             mSelectorRect.setEmpty();
+        }
+		
+		if (mOnScrollListener != null) {
+            mOnScrollListener.onScroll(null, getFirstPosition(), getChildCount(), this.mItemCount);
         }
 
         return deltaY == 0 || movedBy != 0;
@@ -2074,6 +2095,11 @@ public class StaggeredGridView extends ViewGroup {
             // TODO: consider repopulating in a deferred runnable instead
             // (so that successive changes may still be batched)
             requestLayout();
+			
+			// show or hide empty view depend on item counter
+            if (null != emptyView) {
+            	emptyView.setVisibility(mItemCount == 0 ? View.VISIBLE : View.INVISIBLE);
+            }
         }
 
         @Override
